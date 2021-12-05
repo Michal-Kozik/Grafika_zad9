@@ -24,152 +24,16 @@
         </Menu>
         <Border Grid.Row="1" BorderThickness="0,0,1,0" BorderBrush="DarkGray"></Border>
         <StackPanel Grid.Row="1" Margin="10" HorizontalAlignment="Center">
-            <Label FontWeight="Bold" HorizontalAlignment="Center">Operacje morfologiczne:</Label>
+            <Label FontWeight="Bold" HorizontalAlignment="Center">Analiza obrazu:</Label>
             <Button Margin="0, 1" Width="150" Click="Analize">Analizuj</Button>
-            <Label Name="resultLabel">Obszary zielone: -%</Label>
             <StackPanel Orientation="Horizontal">
-                <StackPanel Orientation="Vertical" Name="column1">
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#330000"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#660000"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#990000"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#cc0000"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ff0000"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ff3333"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ff6666"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ff9999"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ffcccc"></Rectangle>
+                <StackPanel Orientation="Vertical">
+                    <Label Name="redLabel">Tereny czerwone: -%</Label>
+                    <Label Name="greenLabel">Tereny zielone: -%</Label>
+                    <Label Name="blueLabel">Tereny niebieskie: -%</Label>
+                    <Label Name="otherLabel">Tereny inne: -%</Label>
                 </StackPanel>
-                <StackPanel Orientation="Vertical" Name="column2">
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#331900"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#663300"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#994c00"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#cc6600"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ff8000"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ff9933"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ffb266"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ffcc99"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ffe5cc"></Rectangle>
-                </StackPanel>
-                <StackPanel Orientation="Vertical" Name="column3">
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#333300"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#666600"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#999900"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#cccc00"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ffff00"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ffff33"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ffff66"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ffff99"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ffffcc"></Rectangle>
-                </StackPanel>
-                <StackPanel Orientation="Vertical" Name="column4">
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#193300"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#336600"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#4c9900"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#66cc00"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#80ff00"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#99ff33"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#b2ff66"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ccff99"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#e5ffcc"></Rectangle>
-                </StackPanel>
-                <StackPanel Orientation="Vertical" Name="column5">
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#003300"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#006600"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#009900"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#00cc00"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#00ff00"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#33ff33"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#66ff66"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#99ff99"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ccffcc"></Rectangle>
-                </StackPanel>
-                <StackPanel Orientation="Vertical" Name="column6">
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#003319"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#006633"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#00994c"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#00cc66"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#00ff80"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#33ff99"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#66ffb2"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#99ffcc"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ccffe5"></Rectangle>
-                </StackPanel>
-                <StackPanel Orientation="Vertical" Name="column7">
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#003333"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#006666"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#009999"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#00cccc"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#00ffff"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#33ffff"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#66ffff"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#99ffff"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ccffff"></Rectangle>
-                </StackPanel>
-                <StackPanel Orientation="Vertical" Name="column8">
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#001933"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#003366"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#004c99"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#0066cc"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#0080ff"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#3399ff"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#66b2ff"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#99ccff"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#cce5ff"></Rectangle>
-                </StackPanel>
-                <StackPanel Orientation="Vertical" Name="column9">
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#000033"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#000066"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#000099"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#0000cc"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#0000ff"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#3333ff"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#6666ff"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#9999ff"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ccccff"></Rectangle>
-                </StackPanel>
-                <StackPanel Orientation="Vertical" Name="column10">
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#190033"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#330066"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#4c0099"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#6600cc"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#7f00ff"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#9933ff"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#b266ff"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#cc99ff"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#e5ccff"></Rectangle>
-                </StackPanel>
-                <StackPanel Orientation="Vertical" Name="column11">
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#330033"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#660066"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#990099"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#cc00cc"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ff00ff"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ff33ff"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ff66ff"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ff99ff"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ffccff"></Rectangle>
-                </StackPanel>
-                <StackPanel Orientation="Vertical" Name="column12">
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#330019"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#660033"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#99004c"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#cc0066"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ff007f"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ff3399"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ff66b2"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ff99cc"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ffcce5"></Rectangle>
-                </StackPanel>
-                <StackPanel Orientation="Vertical" Name="column13">
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#000000"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#202020"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#404040"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#606060"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#808080"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#a0a0a0"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#c0c0c0"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#e0e0e0"></Rectangle>
-                    <Rectangle Height="10" Width="10" Margin="1" Fill="#ffffff"></Rectangle>
+                <StackPanel Orientation="Vertical" Name="statistics">
                 </StackPanel>
             </StackPanel>
         </StackPanel>
@@ -184,7 +48,7 @@
                 <Border BorderThickness="1" BorderBrush="Black" Height="200" Width="200" Margin="25, 25, 25, 0">
                     <Image Grid.Column="1" Name="imgResult" Height="200" Width="200"></Image>
                 </Border>
-                <Label FontWeight="Bold" HorizontalAlignment="Center">Obraz zmodyfikowany</Label>
+                <Label FontWeight="Bold" HorizontalAlignment="Center">Wykryte kolory</Label>
             </StackPanel>
         </StackPanel>
     </Grid>

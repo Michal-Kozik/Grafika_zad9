@@ -16,6 +16,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace Grafika_zad9
 {
@@ -51,7 +52,7 @@ namespace Grafika_zad9
         private void Analize(object sender, RoutedEventArgs e)
         {
             Bitmap imgSourceBitmap = ConvertImgToBitmap(imgSource);
-            BitmapData sourceBitmapData = imgSourceBitmap.LockBits(new Rectangle(0, 0, imgSourceBitmap.Width, imgSourceBitmap.Height),
+            BitmapData sourceBitmapData = imgSourceBitmap.LockBits(new System.Drawing.Rectangle(0, 0, imgSourceBitmap.Width, imgSourceBitmap.Height),
                                                             ImageLockMode.ReadOnly,
                                                             System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
@@ -63,19 +64,21 @@ namespace Grafika_zad9
             imgSourceBitmap.UnlockBits(sourceBitmapData);
 
             double greenField = 0;
+            double blueField = 0;
+            double redField = 0;
             double other = 0;
             // Analiza obrazu.
             for (int i = 0; i + 4 < pixelBuffer.Length; i += 4)
             {
-                // Czy najwiecej jest zielonego.
-                if (pixelBuffer[i + 1] > pixelBuffer[i] && pixelBuffer[i + 1] > pixelBuffer[i + 2])
+                // Tereny zielone.
+                if (pixelBuffer[i + 1] > pixelBuffer[i] + 20 && pixelBuffer[i + 1] > pixelBuffer[i + 2] + 20)
                 {
                     // BGR.
                     if (pixelBuffer[i] < 229 && pixelBuffer[i + 1] > 51 && pixelBuffer[i + 2] < 229)
                     {
-                        pixelBufferResult[i] = 255;
+                        pixelBufferResult[i] = 0;
                         pixelBufferResult[i + 1] = 255;
-                        pixelBufferResult[i + 2] = 255;
+                        pixelBufferResult[i + 2] = 0;
                         greenField++;
                     }
                     else
@@ -86,6 +89,45 @@ namespace Grafika_zad9
                         other++;
                     }
                 }
+                // Tereny niebieskie.
+                else if (pixelBuffer[i] >= pixelBuffer[i + 1] && pixelBuffer[i] > pixelBuffer[i + 2] + 20)
+                {
+                    // BGR.
+                    if (pixelBuffer[i] > 51 && pixelBuffer[i + 2] < 204)
+                    {
+                        pixelBufferResult[i] = 255;
+                        pixelBufferResult[i + 1] = 0;
+                        pixelBufferResult[i + 2] = 0;
+                        blueField++;
+                    }
+                    else
+                    {
+                        pixelBufferResult[i] = 0;
+                        pixelBufferResult[i + 1] = 0;
+                        pixelBufferResult[i + 2] = 0;
+                        other++;
+                    }
+                }
+                // Tereny czerwone.
+                else if (pixelBuffer[i + 2] > pixelBuffer[i + 1] + 40 && pixelBuffer[i + 2] > pixelBuffer[i] + 40)
+                {
+                    // BGR.
+                    if (pixelBuffer[i] < 229 && pixelBuffer[i + 1] < 204 && pixelBuffer[i + 2] > 51)
+                    {
+                        pixelBufferResult[i] = 0;
+                        pixelBufferResult[i + 1] = 0;
+                        pixelBufferResult[i + 2] = 255;
+                        redField++;
+                    }
+                    else
+                    {
+                        pixelBufferResult[i] = 0;
+                        pixelBufferResult[i + 1] = 0;
+                        pixelBufferResult[i + 2] = 0;
+                        other++;
+                    }
+                }
+                // Tereny innych kolorow.
                 else
                 {
                     pixelBufferResult[i] = 0;
@@ -94,18 +136,62 @@ namespace Grafika_zad9
                     other++;
                 }
             }
-            resultLabel.Content = $"Obszary zielone: {Math.Round(greenField / (greenField + other), 2) * 100}%";
-            
+            double r = Math.Round(redField / (redField + greenField + blueField + other), 2) * 100;
+            redLabel.Content = $"Tereny czerwone: {r}%";
+            double g = Math.Round(greenField / (redField + greenField + blueField + other), 2) * 100;
+            greenLabel.Content = $"Tereny zielone: {g}%";
+            double b = Math.Round(blueField / (redField + greenField + blueField + other), 2) * 100;
+            blueLabel.Content = $"Tereny niebieskie: {b}%";
+            double others = Math.Round(other / (redField + greenField + blueField + other), 2) * 100;
+            otherLabel.Content = $"Tereny inne: {others}%";
+            CreateChart(r, g, b, others);
 
             // Rezultat.
             Bitmap imgResultBitmap = new Bitmap(imgSourceBitmap.Width, imgSourceBitmap.Height);
-            BitmapData resultBitmapData = imgResultBitmap.LockBits(new Rectangle(0, 0, imgResultBitmap.Width, imgResultBitmap.Height),
+            BitmapData resultBitmapData = imgResultBitmap.LockBits(new System.Drawing.Rectangle(0, 0, imgResultBitmap.Width, imgResultBitmap.Height),
                                                             ImageLockMode.WriteOnly,
                                                             System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
             Marshal.Copy(pixelBufferResult, 0, resultBitmapData.Scan0, pixelBufferResult.Length);
             imgResultBitmap.UnlockBits(resultBitmapData);
             imgResult.Source = ConvertBitmapToImageSource(imgResultBitmap);
+        }
+
+        private void CreateChart(double r, double g, double b, double others)
+        {
+            statistics.Children.Clear();
+            for (int i = 0; i < r; i++)
+            {
+                System.Windows.Shapes.Rectangle rectangle = new System.Windows.Shapes.Rectangle();
+                rectangle.Width = 10;
+                rectangle.Height = 1;
+                rectangle.Fill = new SolidColorBrush(Colors.Red);
+                statistics.Children.Add(rectangle);
+            }
+            for (int i = 0; i < g; i++)
+            {
+                System.Windows.Shapes.Rectangle rectangle = new System.Windows.Shapes.Rectangle();
+                rectangle.Width = 10;
+                rectangle.Height = 1;
+                rectangle.Fill = new SolidColorBrush(Colors.Green);
+                statistics.Children.Add(rectangle);
+            }
+            for (int i = 0; i < b; i++)
+            {
+                System.Windows.Shapes.Rectangle rectangle = new System.Windows.Shapes.Rectangle();
+                rectangle.Width = 10;
+                rectangle.Height = 1;
+                rectangle.Fill = new SolidColorBrush(Colors.Blue);
+                statistics.Children.Add(rectangle);
+            }
+            for (int i = 0; i < others; i++)
+            {
+                System.Windows.Shapes.Rectangle rectangle = new System.Windows.Shapes.Rectangle();
+                rectangle.Width = 10;
+                rectangle.Height = 1;
+                rectangle.Fill = new SolidColorBrush(Colors.Gray);
+                statistics.Children.Add(rectangle);
+            }
         }
 
         private Bitmap ConvertImgToBitmap(System.Windows.Controls.Image source)
