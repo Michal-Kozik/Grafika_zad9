@@ -38,6 +38,29 @@ namespace Grafika_zad9
                 return true;
         }
 
+        private bool IsInputValid()
+        {
+            if (!Byte.TryParse(redFrom.Text, out byte redFromInput))
+                return false;
+            if (!Byte.TryParse(greenFrom.Text, out byte greenFromInput))
+                return false;
+            if (!Byte.TryParse(blueFrom.Text, out byte blueFromInput))
+                return false;
+            if (!Byte.TryParse(redTo.Text, out byte redToInput))
+                return false;
+            if (!Byte.TryParse(greenTo.Text, out byte greenToInput))
+                return false;
+            if (!Byte.TryParse(blueTo.Text, out byte blueToInput))
+                return false;
+            if (redFromInput < 0 || redFromInput > 255 || greenFromInput < 0 || greenFromInput > 255 || blueFromInput < 0 || blueFromInput > 255)
+                return false;
+            if (redToInput < 0 || redToInput > 255 || greenToInput < 0 || greenToInput > 255 || blueToInput < 0 || blueToInput > 255)
+                return false;
+            if (redToInput < redFromInput || greenToInput < greenFromInput || blueToInput < blueFromInput)
+                return false;
+            return true;
+        }
+
         private void OpenFileDialog(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -51,6 +74,11 @@ namespace Grafika_zad9
 
         private void Analize(object sender, RoutedEventArgs e)
         {
+            if (!IsPictureLoaded())
+            {
+                MessageBox.Show("Nie można przeanalizować obrazu, ponieważ nie został załadowany.", "Nie załadowano obrazu", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             Bitmap imgSourceBitmap = ConvertImgToBitmap(imgSource);
             BitmapData sourceBitmapData = imgSourceBitmap.LockBits(new System.Drawing.Rectangle(0, 0, imgSourceBitmap.Width, imgSourceBitmap.Height),
                                                             ImageLockMode.ReadOnly,
@@ -159,7 +187,16 @@ namespace Grafika_zad9
 
         private void CustomAnalize(object sender, RoutedEventArgs e)
         {
-            // TODO: walidacja.
+            if (!IsPictureLoaded())
+            {
+                MessageBox.Show("Nie można przeanalizować obrazu, ponieważ nie został załadowany.", "Nie załadowano obrazu", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (!IsInputValid())
+            {
+                MessageBox.Show("Podane dane nie są prawidłowe.", "Niepoprawne dane", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             Bitmap imgSourceBitmap = ConvertImgToBitmap(imgSource);
             BitmapData sourceBitmapData = imgSourceBitmap.LockBits(new System.Drawing.Rectangle(0, 0, imgSourceBitmap.Width, imgSourceBitmap.Height),
                                                             ImageLockMode.ReadOnly,
@@ -280,7 +317,11 @@ namespace Grafika_zad9
 
         private void ShowColor(object sender, RoutedEventArgs e)
         {
-            //TODO: Walidacja
+            if (!IsInputValid())
+            {
+                MessageBox.Show("Podane dane nie są prawidłowe.", "Niepoprawne dane", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             byte redFromInput = Convert.ToByte(redFrom.Text);
             byte greenFromInput = Convert.ToByte(greenFrom.Text);
             byte blueFromInput = Convert.ToByte(blueFrom.Text);

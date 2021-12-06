@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Grafika_zad9"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
+        Title="Grafika zadanie nr 9" Height="600" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -38,21 +38,25 @@
             </StackPanel>
             <Label FontWeight="Bold" HorizontalAlignment="Center">Dowolny teren:</Label>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Width="25">R:</Label>
                 <TextBox Name="redFrom" Width="50"></TextBox>
                 <Label>-</Label>
                 <TextBox Name="redTo" Width="50"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Width="25">G:</Label>
                 <TextBox Name="greenFrom" Width="50"></TextBox>
                 <Label>-</Label>
                 <TextBox Name="greenTo" Width="50"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Width="25">B:</Label>
                 <TextBox Name="blueFrom" Width="50"></TextBox>
                 <Label>-</Label>
                 <TextBox Name="blueTo" Width="50"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Width="25"></Label>
                 <Rectangle Name="colorFrom" Height="50" Width="50" Stroke="Black"></Rectangle>
                 <Label>-</Label>
                 <Rectangle Name="colorTo" Height="50" Width="50" Stroke="Black"></Rectangle>
