@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Grafika_zad9"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -24,16 +24,47 @@
         </Menu>
         <Border Grid.Row="1" BorderThickness="0,0,1,0" BorderBrush="DarkGray"></Border>
         <StackPanel Grid.Row="1" Margin="10" HorizontalAlignment="Center">
-            <Label FontWeight="Bold" HorizontalAlignment="Center">Analiza obrazu:</Label>
+            <Label FontWeight="Bold" HorizontalAlignment="Center">Domyślne tereny:</Label>
             <Button Margin="0, 1" Width="150" Click="Analize">Analizuj</Button>
             <StackPanel Orientation="Horizontal">
                 <StackPanel Orientation="Vertical">
-                    <Label Name="redLabel">Tereny czerwone: -%</Label>
-                    <Label Name="greenLabel">Tereny zielone: -%</Label>
-                    <Label Name="blueLabel">Tereny niebieskie: -%</Label>
-                    <Label Name="otherLabel">Tereny inne: -%</Label>
+                    <Label Name="redLabel">Czerwone: -%</Label>
+                    <Label Name="greenLabel">Zielone: -%</Label>
+                    <Label Name="blueLabel">Niebieskie: -%</Label>
+                    <Label Name="otherLabel">Inne: -%</Label>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Name="statistics">
+                </StackPanel>
+            </StackPanel>
+            <Label FontWeight="Bold" HorizontalAlignment="Center">Dowolny teren:</Label>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBox Name="redFrom" Width="50"></TextBox>
+                <Label>-</Label>
+                <TextBox Name="redTo" Width="50"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBox Name="greenFrom" Width="50"></TextBox>
+                <Label>-</Label>
+                <TextBox Name="greenTo" Width="50"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBox Name="blueFrom" Width="50"></TextBox>
+                <Label>-</Label>
+                <TextBox Name="blueTo" Width="50"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Rectangle Name="colorFrom" Height="50" Width="50" Stroke="Black"></Rectangle>
+                <Label>-</Label>
+                <Rectangle Name="colorTo" Height="50" Width="50" Stroke="Black"></Rectangle>
+            </StackPanel>
+            <Button Margin="0, 5" Click="ShowColor">Podgląd</Button>
+            <Button Click="CustomAnalize">Analizuj </Button>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Vertical">
+                    <Label Name="inRangeLabel">Należy: -%</Label>
+                    <Label Name="outOfRangeLabel">Nie należy: -%</Label>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Name="customStatistics">
                 </StackPanel>
             </StackPanel>
         </StackPanel>
