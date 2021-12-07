@@ -257,6 +257,110 @@ namespace Grafika_zad9
             imgResult.Source = ConvertBitmapToImageSource(imgResultBitmap);
         }
 
+        private void YUVAnalize(object sender, RoutedEventArgs e)
+        {
+            if (!IsPictureLoaded())
+            {
+                MessageBox.Show("Nie można przeanalizować obrazu, ponieważ nie został załadowany.", "Nie załadowano obrazu", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            Bitmap imgSourceBitmap = ConvertImgToBitmap(imgSource);
+            BitmapData sourceBitmapData = imgSourceBitmap.LockBits(new System.Drawing.Rectangle(0, 0, imgSourceBitmap.Width, imgSourceBitmap.Height),
+                                                            ImageLockMode.ReadOnly,
+                                                            System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            byte[] pixelBuffer = new byte[sourceBitmapData.Stride * sourceBitmapData.Height];
+            Marshal.Copy(sourceBitmapData.Scan0, pixelBuffer, 0, pixelBuffer.Length);
+
+            double[] YUV = new double[pixelBuffer.Length];
+            int[] convertedYUV = new int[pixelBuffer.Length];
+
+            byte[] pixelBufferResult = new byte[sourceBitmapData.Stride * sourceBitmapData.Height];
+            Marshal.Copy(sourceBitmapData.Scan0, pixelBufferResult, 0, pixelBufferResult.Length);
+            imgSourceBitmap.UnlockBits(sourceBitmapData);
+
+            int[] Y = new int[21] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0 };
+            int[] U = new int[21] { 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            int[] V = new int[21] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+            // Zielony z ksiazki
+            //int[] Y = new int[21] { 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+            //int[] U = new int[21] { 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            //int[] V = new int[21] { 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+            double a = 0.001;
+            double greenPixel = 0;
+            double otherPixel = 0;
+            // Analiza obrazu.
+            for (int i = 0; i + 4 < pixelBuffer.Length; i += 4)
+            {
+                double y = pixelBuffer[i + 2] * 0.299 + pixelBuffer[i + 1] * 0.587 + pixelBuffer[i] * 0.114;
+                double u = pixelBuffer[i + 2] * -0.147 + pixelBuffer[i + 1] * -0.289 + pixelBuffer[i] * 0.436 + 128;
+                double v = pixelBuffer[i + 2] * 0.615 + pixelBuffer[i + 1] * -0.515 + pixelBuffer[i] * -0.100 + 128;
+
+                YUV[i] = y;
+                YUV[i + 1] = u;
+                YUV[i + 2] = v;
+                YUV[i + 3] = 0;
+
+                convertedYUV[i] = Convert.ToInt32(y / (12.75 + a));
+                convertedYUV[i + 1] = Convert.ToInt32((u + 111.18) / (22.236 + a));
+                convertedYUV[i + 2] = Convert.ToInt32((v + 156.825) / (31.365 + a));
+                convertedYUV[i + 3] = 0;
+
+                if (Y[convertedYUV[i]] == 1 && U[convertedYUV[i + 1]] == 1 && V[convertedYUV[i + 2]] == 1)
+                {
+                    pixelBufferResult[i] = pixelBuffer[i];
+                    pixelBufferResult[i + 1] = pixelBuffer[i + 1];
+                    pixelBufferResult[i + 2] = pixelBuffer[i + 2];
+                    greenPixel++;
+                }
+                else
+                {
+                    pixelBufferResult[i] = 0;
+                    pixelBufferResult[i + 1] = 0;
+                    pixelBufferResult[i + 2] = 0;
+                    otherPixel++;
+                }
+            }
+            double greenPercent = Math.Round(greenPixel / (greenPixel + otherPixel), 5) * 100;
+            greenLabelYUV.Content = $"Zielone: {greenPercent}%";
+            double otherPercent = Math.Round(otherPixel / (greenPixel + otherPixel), 5) * 100;
+            otherLabelYUV.Content = $"Inne: {otherPercent}%";
+            CreateYUVChart(greenPercent, otherPercent);
+
+            // Rezultat.
+            Bitmap imgResultBitmap = new Bitmap(imgSourceBitmap.Width, imgSourceBitmap.Height);
+            BitmapData resultBitmapData = imgResultBitmap.LockBits(new System.Drawing.Rectangle(0, 0, imgResultBitmap.Width, imgResultBitmap.Height),
+                                                            ImageLockMode.WriteOnly,
+                                                            System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            Marshal.Copy(pixelBufferResult, 0, resultBitmapData.Scan0, pixelBufferResult.Length);
+            imgResultBitmap.UnlockBits(resultBitmapData);
+            imgResult.Source = ConvertBitmapToImageSource(imgResultBitmap);
+        }
+
+        private void CreateYUVChart(double foreground, double background)
+        {
+            yuvStatistics.Children.Clear();
+            for (int i = 0; i < foreground; i++)
+            {
+                System.Windows.Shapes.Rectangle rectangle = new System.Windows.Shapes.Rectangle();
+                rectangle.Width = 10;
+                rectangle.Height = 1;
+                rectangle.Fill = new SolidColorBrush(Colors.Green);
+                yuvStatistics.Children.Add(rectangle);
+            }
+            for (int i = 0; i < background; i++)
+            {
+                System.Windows.Shapes.Rectangle rectangle = new System.Windows.Shapes.Rectangle();
+                rectangle.Width = 10;
+                rectangle.Height = 1;
+                rectangle.Fill = new SolidColorBrush(Colors.Gray);
+                yuvStatistics.Children.Add(rectangle);
+            }
+        }
+
         private void CreateCustomChart(double inRangePercent, double outOfRangePercent)
         {
             customStatistics.Children.Clear();

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Grafika_zad9"
         mc:Ignorable="d"
-        Title="Grafika zadanie nr 9" Height="600" Width="800">
+        Title="Grafika zadanie nr 9" Height="700" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -69,6 +69,16 @@
                     <Label Name="outOfRangeLabel">Nie należy: -%</Label>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Name="customStatistics">
+                </StackPanel>
+            </StackPanel>
+            <Label FontWeight="Bold" HorizontalAlignment="Center">Tereny zielone:</Label>
+            <Button Click="YUVAnalize">Wykorzystanie YUV</Button>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Vertical">
+                    <Label Name="greenLabelYUV">Zielone: -%</Label>
+                    <Label Name="otherLabelYUV">Inne: -%</Label>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Name="yuvStatistics">
                 </StackPanel>
             </StackPanel>
         </StackPanel>
