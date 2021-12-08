@@ -304,7 +304,7 @@ namespace Grafika_zad9
                     break;
                 case "YmaxSubtract":
                     Ymax--;
-                    Ymax = (Ymax < 0) ? 20 : Ymax;
+                    Ymax = (Ymax < 0) ? 0 : Ymax;
                     break;
                 case "UminAdd":
                     Umin++;
@@ -312,7 +312,7 @@ namespace Grafika_zad9
                     break;
                 case "UminSubtract":
                     Umin--;
-                    Umin = (Umin < 0) ? 20 : Umin;
+                    Umin = (Umin < 0) ? 0 : Umin;
                     break;
                 case "UmaxAdd":
                     Umax++;
@@ -320,7 +320,7 @@ namespace Grafika_zad9
                     break;
                 case "UmaxSubtract":
                     Umax--;
-                    Umax = (Umax < 0) ? 20 : Umax;
+                    Umax = (Umax < 0) ? 0 : Umax;
                     break;
                 case "VminAdd":
                     Vmin++;
@@ -328,7 +328,7 @@ namespace Grafika_zad9
                     break;
                 case "VminSubtract":
                     Vmin--;
-                    Vmin = (Vmin < 0) ? 20 : Vmin;
+                    Vmin = (Vmin < 0) ? 0 : Vmin;
                     break;
                 case "VmaxAdd":
                     Vmax++;
@@ -336,7 +336,7 @@ namespace Grafika_zad9
                     break;
                 case "VmaxSubtract":
                     Vmax--;
-                    Vmax = (Vmax < 0) ? 20 : Vmax;
+                    Vmax = (Vmax < 0) ? 0 : Vmax;
                     break;
             }
             YminLabel.Content = $"Ymin: {Ymin}";
@@ -354,14 +354,6 @@ namespace Grafika_zad9
                 U[i] = (i < Umin || i > Umax) ? 0 : 1;
                 V[i] = (i < Vmin || i > Vmax) ? 0 : 1;
             }
-            //int[] s = Y;
-            //s = U;
-            //s = V;
-
-            // Zielony z ksiazki
-            //int[] Y = new int[21] { 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-            //int[] U = new int[21] { 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            //int[] V = new int[21] { 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
             double a = 0.001;
             double foregroundPixel = 0;
