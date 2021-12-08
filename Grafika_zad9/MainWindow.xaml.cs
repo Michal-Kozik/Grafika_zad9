@@ -25,6 +25,13 @@ namespace Grafika_zad9
     /// </summary>
     public partial class MainWindow : Window
     {
+        private int Ymin = 0;
+        private int Ymax = 18;
+        private int Umin = 4;
+        private int Umax = 10;
+        private int Vmin = 0;
+        private int Vmax = 9;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -279,9 +286,77 @@ namespace Grafika_zad9
             Marshal.Copy(sourceBitmapData.Scan0, pixelBufferResult, 0, pixelBufferResult.Length);
             imgSourceBitmap.UnlockBits(sourceBitmapData);
 
+            // Uzupelnienie tablic.
+            Button button = sender as Button;
+            switch (button.Name)
+            {
+                case "YminAdd":
+                    Ymin++;
+                    Ymin = (Ymin > 20) ? 20 : Ymin;
+                    break;
+                case "YminSubtract":
+                    Ymin--;
+                    Ymin = (Ymin < 0) ? 0 : Ymin;
+                    break;
+                case "YmaxAdd":
+                    Ymax++;
+                    Ymax = (Ymax > 20) ? 20 : Ymax;
+                    break;
+                case "YmaxSubtract":
+                    Ymax--;
+                    Ymax = (Ymax < 0) ? 20 : Ymax;
+                    break;
+                case "UminAdd":
+                    Umin++;
+                    Umin = (Umin > 20) ? 20 : Umin;
+                    break;
+                case "UminSubtract":
+                    Umin--;
+                    Umin = (Umin < 0) ? 20 : Umin;
+                    break;
+                case "UmaxAdd":
+                    Umax++;
+                    Umax = (Umax > 20) ? 20 : Umax;
+                    break;
+                case "UmaxSubtract":
+                    Umax--;
+                    Umax = (Umax < 0) ? 20 : Umax;
+                    break;
+                case "VminAdd":
+                    Vmin++;
+                    Vmin = (Vmin > 20) ? 20 : Vmin;
+                    break;
+                case "VminSubtract":
+                    Vmin--;
+                    Vmin = (Vmin < 0) ? 20 : Vmin;
+                    break;
+                case "VmaxAdd":
+                    Vmax++;
+                    Vmax = (Vmax > 20) ? 20 : Vmax;
+                    break;
+                case "VmaxSubtract":
+                    Vmax--;
+                    Vmax = (Vmax < 0) ? 20 : Vmax;
+                    break;
+            }
+            YminLabel.Content = $"Ymin: {Ymin}";
+            YmaxLabel.Content = $"Ymax: {Ymax}";
+            UminLabel.Content = $"Umin: {Umin}";
+            UmaxLabel.Content = $"Umax: {Umax}";
+            VminLabel.Content = $"Vmin: {Vmin}";
+            VmaxLabel.Content = $"Vmax: {Vmax}";
             int[] Y = new int[21] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0 };
             int[] U = new int[21] { 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             int[] V = new int[21] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            for (int i = 0; i < 21; i++)
+            {
+                Y[i] = (i < Ymin || i > Ymax) ? 0 : 1;
+                U[i] = (i < Umin || i > Umax) ? 0 : 1;
+                V[i] = (i < Vmin || i > Vmax) ? 0 : 1;
+            }
+            //int[] s = Y;
+            //s = U;
+            //s = V;
 
             // Zielony z ksiazki
             //int[] Y = new int[21] { 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
@@ -289,14 +364,14 @@ namespace Grafika_zad9
             //int[] V = new int[21] { 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
             double a = 0.001;
-            double greenPixel = 0;
-            double otherPixel = 0;
+            double foregroundPixel = 0;
+            double backgroundPixel = 0;
             // Analiza obrazu.
             for (int i = 0; i + 4 < pixelBuffer.Length; i += 4)
             {
                 double y = pixelBuffer[i + 2] * 0.299 + pixelBuffer[i + 1] * 0.587 + pixelBuffer[i] * 0.114;
-                double u = pixelBuffer[i + 2] * -0.147 + pixelBuffer[i + 1] * -0.289 + pixelBuffer[i] * 0.436 + 128;
-                double v = pixelBuffer[i + 2] * 0.615 + pixelBuffer[i + 1] * -0.515 + pixelBuffer[i] * -0.100 + 128;
+                double u = pixelBuffer[i + 2] * -0.147 + pixelBuffer[i + 1] * -0.289 + pixelBuffer[i] * 0.436;
+                double v = pixelBuffer[i + 2] * 0.615 + pixelBuffer[i + 1] * -0.515 + pixelBuffer[i] * -0.100;
 
                 YUV[i] = y;
                 YUV[i + 1] = u;
@@ -304,8 +379,8 @@ namespace Grafika_zad9
                 YUV[i + 3] = 0;
 
                 convertedYUV[i] = Convert.ToInt32(y / (12.75 + a));
-                convertedYUV[i + 1] = Convert.ToInt32((u + 111.18) / (22.236 + a));
-                convertedYUV[i + 2] = Convert.ToInt32((v + 156.825) / (31.365 + a));
+                convertedYUV[i + 1] = Convert.ToInt32((u + 111.18) / (11.118 + a));
+                convertedYUV[i + 2] = Convert.ToInt32((v + 156.825) / (15.6825 + a));
                 convertedYUV[i + 3] = 0;
 
                 if (Y[convertedYUV[i]] == 1 && U[convertedYUV[i + 1]] == 1 && V[convertedYUV[i + 2]] == 1)
@@ -313,19 +388,19 @@ namespace Grafika_zad9
                     pixelBufferResult[i] = pixelBuffer[i];
                     pixelBufferResult[i + 1] = pixelBuffer[i + 1];
                     pixelBufferResult[i + 2] = pixelBuffer[i + 2];
-                    greenPixel++;
+                    foregroundPixel++;
                 }
                 else
                 {
                     pixelBufferResult[i] = 0;
                     pixelBufferResult[i + 1] = 0;
                     pixelBufferResult[i + 2] = 0;
-                    otherPixel++;
+                    backgroundPixel++;
                 }
             }
-            double greenPercent = Math.Round(greenPixel / (greenPixel + otherPixel), 5) * 100;
+            double greenPercent = Math.Round(foregroundPixel / (foregroundPixel + backgroundPixel), 5) * 100;
             greenLabelYUV.Content = $"Zielone: {greenPercent}%";
-            double otherPercent = Math.Round(otherPixel / (greenPixel + otherPixel), 5) * 100;
+            double otherPercent = Math.Round(backgroundPixel / (foregroundPixel + backgroundPixel), 5) * 100;
             otherLabelYUV.Content = $"Inne: {otherPercent}%";
             CreateYUVChart(greenPercent, otherPercent);
 

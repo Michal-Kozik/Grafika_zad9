@@ -71,12 +71,41 @@
                 <StackPanel Orientation="Vertical" Name="customStatistics">
                 </StackPanel>
             </StackPanel>
-            <Label FontWeight="Bold" HorizontalAlignment="Center">Tereny zielone:</Label>
-            <Button Click="YUVAnalize">Wykorzystanie YUV</Button>
+            <Label FontWeight="Bold" HorizontalAlignment="Center">Model YUV</Label>
+            <DockPanel>
+                <Button Click="YUVAnalize" Name="YminSubtract" DockPanel.Dock="Left" Width="20" Height="20">-</Button>
+                <Button Click="YUVAnalize" Name="YminAdd" DockPanel.Dock="Right" Width="20" Height="20">+</Button>
+                <Label Name="YminLabel" HorizontalContentAlignment="Center">Y min: 0</Label>
+            </DockPanel>
+            <DockPanel>
+                <Button Click="YUVAnalize" Name="YmaxSubtract" DockPanel.Dock="Left" Width="20" Height="20">-</Button>
+                <Button Click="YUVAnalize" Name="YmaxAdd" DockPanel.Dock="Right" Width="20" Height="20">+</Button>
+                <Label Name="YmaxLabel" HorizontalContentAlignment="Center">Y max: 18</Label>
+            </DockPanel>
+            <DockPanel>
+                <Button Click="YUVAnalize" Name="UminSubtract" DockPanel.Dock="Left" Width="20" Height="20">-</Button>
+                <Button Click="YUVAnalize" Name="UminAdd" DockPanel.Dock="Right" Width="20" Height="20">+</Button>
+                <Label Name="UminLabel" HorizontalContentAlignment="Center">U min: 4</Label>
+            </DockPanel>
+            <DockPanel>
+                <Button Click="YUVAnalize" Name="UmaxSubtract" DockPanel.Dock="Left" Width="20" Height="20">-</Button>
+                <Button Click="YUVAnalize" Name="UmaxAdd" DockPanel.Dock="Right" Width="20" Height="20">+</Button>
+                <Label Name="UmaxLabel" HorizontalContentAlignment="Center">U max: 10</Label>
+            </DockPanel>
+            <DockPanel>
+                <Button Click="YUVAnalize" Name="VminSubtract" DockPanel.Dock="Left" Width="20" Height="20">-</Button>
+                <Button Click="YUVAnalize" Name="VminAdd" DockPanel.Dock="Right" Width="20" Height="20">+</Button>
+                <Label Name="VminLabel" HorizontalContentAlignment="Center">V min: 0</Label>
+            </DockPanel>
+            <DockPanel>
+                <Button Click="YUVAnalize" Name="VmaxSubtract" DockPanel.Dock="Left" Width="20" Height="20">-</Button>
+                <Button Click="YUVAnalize" Name="VmaxAdd" DockPanel.Dock="Right" Width="20" Height="20">+</Button>
+                <Label Name="VmaxLabel" HorizontalContentAlignment="Center">V max: 9</Label>
+            </DockPanel>
             <StackPanel Orientation="Horizontal">
                 <StackPanel Orientation="Vertical">
-                    <Label Name="greenLabelYUV">Zielone: -%</Label>
-                    <Label Name="otherLabelYUV">Inne: -%</Label>
+                    <Label Name="greenLabelYUV">Należy: -%</Label>
+                    <Label Name="otherLabelYUV">Nie należy: -%</Label>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Name="yuvStatistics">
                 </StackPanel>
